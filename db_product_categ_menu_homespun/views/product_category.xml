@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+
+    <!-- Child Category Template -->
+    <template id="menu_categories_recursive" name="Menu Category list">
+        <li class="dropdown dropdown-submenu">
+            <a t-att-href="'/shop/category/%s' % (categ.id)" t-field="categ.name"></a>
+            <i t-if="categ.child_id"
+               class="fa fa-caret-right text-primary caret-icon-pos"/>
+            <ul t-if="categ.child_id"
+                class="dropdown-menu">
+                <t t-foreach="categ.child_id" t-as="categ">
+                    <t t-call="website_product_categ_menu_and_banner_73lines.menu_categories_recursive"/>
+                </t>
+            </ul>
+        </li>
+    </template>
+    
+    <!-- Domain for public category -->
+    <record id="domain_public_category_published_form_view" model="ir.ui.view">
+        <field name="name">Domain public category published</field>
+        <field name="model">product.public.category</field>
+        <field name="inherit_id" ref="website_sale.product_public_category_form_view"/>
+        <field name="arch" type="xml">
+        
+            <xpath expr="//sheet" position="inside">
+					<group>
+	        			<field name="is_published"/>
+					</group>
+			</xpath>      
+        </field>
+    </record>
+
+
+</odoo>
